@@ -53,5 +53,6 @@ When N1MM receives a callsign, a `callsign.wav` will be generated in the current
 ---
 
 ## 5. Sending audio to radio
-You can map the WAV file to a message button in N1MM or use an external audio interface.
-  Like this in the message editor:  F5 His Call,\callsign.wav
+You can map the WAV file to a message button in N1MM or use an external audio interface.  
+Like this in the message editor:  
+F5 His Call,\callsign.wav
