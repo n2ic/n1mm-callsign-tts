@@ -1,6 +1,6 @@
 # N1MM Callsign TTS with Piper
 
-This project takes **N1MM Logger+ UDP LookupInfo packets**, extracts the `call` field, converts it into **NATO phonetics**, and uses the **Piper TTS engine** to generate a WAV file for SSB contest messages.
+This project takes **N1MM Logger+ UDP LookupInfo packets**, extracts the `call` field, converts it into **phonetics**, and uses the **Piper TTS engine** to generate a WAV file for SSB contest messages.
 
 ## Features
 - Works alongside other N1MM UDP tools (custom port)
