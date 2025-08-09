@@ -41,6 +41,7 @@ pip install -r requirements.txt
 - Set **IP** to `127.0.0.1`
 - Set **Port** to `12061`
 - Click **OK**
+<img width="723" height="588" alt="Näyttökuva 2025-08-09 213234" src="https://github.com/user-attachments/assets/04e51615-c025-4a04-8972-c4639a55506b" />
 
 ---
 
