@@ -1,6 +1,6 @@
 # N1MM Callsign TTS with Piper
 
-This project takes **N1MM Logger+ UDP LookupInfo packets**, extracts the `call` field, converts it into **NATO phonetics**, and uses the **Piper TTS engine** to generate a WAV file for SSB contest messages.
+This project takes **N1MM Logger+ UDP LookupInfo packets**, extracts the `call` field, converts it into **phonetics**, and uses the **Piper TTS engine** to generate a WAV file for SSB contest messages.
 
 ## Features
 - Works alongside other N1MM UDP tools (custom port)
@@ -41,6 +41,7 @@ pip install -r requirements.txt
 - Set **IP** to `127.0.0.1`
 - Set **Port** to `12061`
 - Click **OK**
+<img width="723" height="588" alt="Näyttökuva 2025-08-09 213234" src="https://github.com/user-attachments/assets/04e51615-c025-4a04-8972-c4639a55506b" />
 
 ---
 
@@ -50,7 +51,36 @@ python callsign_tts.py
 ```
 When N1MM receives a callsign, a `callsign.wav` will be generated in the current folder.
 
+
+## New versions
+
+### `callsign_nr_tts.py`
+- Listens for N1MM LookupInfo UDP packets.
+- Generates `callsign.wav` with the calling station in phonetics.
+- Extracts `<sntnr>` (sent number) from the packet.
+- Creates:
+  - `report_nr.wav` → `"you are five nine ###"` (with ### formatted with leading zeros)
+  - `nr.wav` → just the ### number (leading zeros kept)
+- Leading zero rules:
+  - `<10` → `"00#"` (e.g., `5` → `"005"`)
+  - `<100` → `"0##"` (e.g., `10` → `"010"`)
+  - Otherwise → `"###"`
+
+### `callsign_slownr_tts.py`
+- Same features as `callsign_nr_tts.py`
+- Sent number is spoken **digit-by-digit** with extra pauses for clarity:
+  - `"005"` → `"Zero  Zero  Five"`
+  - `"010"` → `"Zero  One  Zero"`
+  - `"123"` → `"One  Two  Three"`
+- Designed for better intelligibility.
+
+
 ---
 
 ## 5. Sending audio to radio
-You can map the WAV file to a message button in N1MM or use an external audio interface.
+You can map the WAV file to a message button in N1MM or use an external audio interface.  
+Like this in the message editor:  
+F2 Exch,\report_nr.wav
+F5 His Call,\callsign.wav  
+F6 NR,\nr.wav  
+
