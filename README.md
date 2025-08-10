@@ -80,7 +80,8 @@ When N1MM receives a callsign, a `callsign.wav` will be generated in the current
 ## 5. Sending audio to radio
 You can map the WAV file to a message button in N1MM or use an external audio interface.  
 Like this in the message editor:  
-F2 Exch,\report_nr.wav
+F2 Exch,\report_nr.wav  
+And with callsign_nr_tts.py and callsign_slownr_tts.py you have these two additional wav files:  
 F5 His Call,\callsign.wav  
 F6 NR,\nr.wav  
 
