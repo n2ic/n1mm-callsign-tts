@@ -51,9 +51,36 @@ python callsign_tts.py
 ```
 When N1MM receives a callsign, a `callsign.wav` will be generated in the current folder.
 
+
+## New versions
+
+### `callsign_nr_tts.py`
+- Listens for N1MM LookupInfo UDP packets.
+- Generates `callsign.wav` with the calling station in phonetics.
+- Extracts `<sntnr>` (sent number) from the packet.
+- Creates:
+  - `report_nr.wav` → `"you are five nine ###"` (with ### formatted with leading zeros)
+  - `nr.wav` → just the ### number (leading zeros kept)
+- Leading zero rules:
+  - `<10` → `"00#"` (e.g., `5` → `"005"`)
+  - `<100` → `"0##"` (e.g., `10` → `"010"`)
+  - Otherwise → `"###"`
+
+### `callsign_slownr_tts.py`
+- Same features as `callsign_nr_tts.py`
+- Sent number is spoken **digit-by-digit** with extra pauses for clarity:
+  - `"005"` → `"Zero  Zero  Five"`
+  - `"010"` → `"Zero  One  Zero"`
+  - `"123"` → `"One  Two  Three"`
+- Designed for better intelligibility.
+
+
 ---
 
 ## 5. Sending audio to radio
 You can map the WAV file to a message button in N1MM or use an external audio interface.  
 Like this in the message editor:  
-F5 His Call,\callsign.wav
+F2 Exch,\report_nr.wav
+F5 His Call,\callsign.wav  
+F6 NR,\nr.wav  
+
