@@ -157,7 +157,7 @@ Before uploading, follow these cleanup steps:
 
 ---
 
-## 2) Upload to RunPod.io (staging pod)
+## 3) Upload to RunPod.io (staging pod)
 
 * Create a **Network Volume** (e.g., 40 GB).
 * Launch a temporary pod just to transfer files:
@@ -195,7 +195,7 @@ Terminate this staging pod.
 
 ---
 
-## 3) Launch the **training** pod
+## 4) Launch the **training** pod
 
 From your **Network Volume** page → “Deploy Pod with Volume”.
 
@@ -236,7 +236,7 @@ mkdir -p /cache/cache
 
 ---
 
-## 4) Monitor training
+## 5) Monitor training
 
 Open the pod’s **6006** link → **Scalars**.
 
@@ -255,7 +255,7 @@ tensorboard --logdir /cache/lightning_logs --bind_all --port 6006 >/tmp/tb.log 2
 
 ---
 
-## 5) Export ONNX (you can do this while it trains)
+## 6) Export ONNX (you can do this while it trains)
 
 ```bash
 LATEST=$(ls -1t /cache/lightning_logs/version_*/checkpoints/*.ckpt | head -n 1)
@@ -268,7 +268,7 @@ Download with `runpodctl` (or copy to your S3-compatible storage if you use one)
 
 ---
 
-## 6) Use the model on Windows
+## 7) Use the model on Windows
 
 Place your **`voice.onnx`** next to the **Ryan medium JSON** (download from Hugging Face) and synthesize:
 
@@ -282,7 +282,7 @@ Place your **`voice.onnx`** next to the **Ryan medium JSON** (download from Hugg
 
 ---
 
-## 7) Troubleshooting (fast fixes)
+## 8) Troubleshooting (fast fixes)
 
 * **6006 not available, CPU 100%:** preprocessing is running. It completes, then training (GPU) starts and TB appears.
 * **Checkpoints disappear after reboot:** you forgot to persist `/cache`. Run:
