@@ -338,5 +338,5 @@ PY
 * The head-silence augmentation is what eliminates the tiny onset artifact on contest phrases without adding any runtime delay.
 * Always persist `/cache` to your mounted volume before training so logs & checkpoints survive restarts.
 
-If you want a one-liner **Start Command** variant later that automates the `/cache` link, metadata normalization, preprocessing, training, and TensorBoard, I can add it as a separate section.
+
 
