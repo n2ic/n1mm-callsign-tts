@@ -108,7 +108,7 @@ Follow these steps to test your microphone and begin recording using the provide
 Run the `mic_test.py` script to ensure your microphone is working correctly.
 
 ### 2. 📁 Prepare Your Environment
-Copy the `metadata.csv` file into the same directory as `record_simple.py`.
+Copy the `metadata.csv` and `prompts.csv` files into the same directory as `record_simple.py`.
 
 ### 3. 🔴 Start Recording
 Execute the `record_simple.py` script to begin recording.
