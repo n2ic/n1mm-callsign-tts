@@ -164,7 +164,11 @@ Before uploading, follow these cleanup steps:
 
   * Image: **RunPod PyTorch 2.8.0**
   * GPU: **NVIDIA L4** (any CUDA GPU is fine)
-  * Mount the network volume at `/dataset`.
+  * Mount the network volume at `/dataset`.  
+ 
+Here is a short video demonstrating the process of launching a network storage with a temporary pod (for transferring files), terminating the pod, and then deploying a new pod with the same storage for training:  
+👉 [Deploying RunPod for Piper voice model training](https://youtu.be/U7hDa_erjSk?si=BGneA25qC3lpFWrT)
+
 
 I found it easiest to use `runpodctl` to copy the local `dataset/` to the runpod volume:
 
