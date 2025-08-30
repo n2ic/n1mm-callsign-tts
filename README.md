@@ -1,8 +1,8 @@
-# N1MM Callsign TTS with Piper
+# N1MM with Piper TTS for AI generated messages
 
 N1MM [experimental software](https://n1mmwp.hamdocs.com/mmfiles/categories/programexperimental/) supports now piper TTS natively. 
 
-# Piper “your personal contest voice” – end-to-end cookbook
+## Piper “your personal contest voice” – end-to-end cookbook
 
 If you want the Piper ONNX model to have your own voice this walks you from **recordings → trained Piper voice** using RunPod and the `ifansnek/piper-train-docker:latest` image.
 
