@@ -1,94 +1,6 @@
 # N1MM Callsign TTS with Piper
 
-This project takes **N1MM Logger+ UDP LookupInfo packets**, extracts the `call` field, converts it into **phonetics**, and uses the **Piper TTS engine** to generate a WAV file for SSB contest messages.
-
-## Features
-- Works alongside other N1MM UDP tools (custom port)
-- Dynamic TTS — no need to pre-record callsigns
-- Uses [Piper](https://github.com/rhasspy/piper) for fast, offline, natural-sounding voices
-
----
-
-## 1. Installation
-
-### Prerequisites
-- **Windows 10/11**
-- **Python 3.10+**
-- [Piper TTS binary](https://github.com/rhasspy/piper/releases) (Windows .zip)
-
-### Python script
-```bash
-git clone https://github.com/oh2xx/n1mm-callsign-tts.git
-cd n1mm-callsign-tts
-pip install -r requirements.txt
-```
-
----
-
-## 2. Piper Setup
-1. Download Piper from: [Piper Releases](https://github.com/rhasspy/piper/releases)
-2. Extract somewhere like `C:\piper\`
-3. Download a voice model, e.g.:
-   - [en_US-amy-medium](https://github.com/rhasspy/piper/releases/tag/v0.0.2)
-4. Place model file (`.onnx`) into Piper folder
-
----
-
-## 3. N1MM UDP Configuration
-- In N1MM, go to **Config → Configure Ports, Mode Control, Winkey, etc.**
-- Select **Broadcast Data** tab
-- Enable **LookupInfo** broadcast
-- Set **IP** to `127.0.0.1`
-- Set **Port** to `12061`
-- Click **OK**
-<img width="723" height="588" alt="Näyttökuva 2025-08-09 213234" src="https://github.com/user-attachments/assets/04e51615-c025-4a04-8972-c4639a55506b" />
-
----
-
-## 4. Running the script
-```bash
-python callsign_tts.py
-```
-When N1MM receives a callsign, a `callsign.wav` will be generated in the current folder.
-
-
-## New versions
-
-### `callsign_nr_tts.py`
-- Listens for N1MM LookupInfo UDP packets.
-- Generates `callsign.wav` with the calling station in phonetics.
-- Extracts `<sntnr>` (sent number) from the packet.
-- Creates:
-  - `report_nr.wav` → `"you are five nine ###"` (with ### formatted with leading zeros)
-  - `nr.wav` → just the ### number (leading zeros kept)
-- Leading zero rules:
-  - `<10` → `"00#"` (e.g., `5` → `"005"`)
-  - `<100` → `"0##"` (e.g., `10` → `"010"`)
-  - Otherwise → `"###"`
-
-### `callsign_slownr_tts.py`
-- Same features as `callsign_nr_tts.py`
-- Sent number is spoken **digit-by-digit** with extra pauses for clarity:
-  - `"005"` → `"Zero  Zero  Five"`
-  - `"010"` → `"Zero  One  Zero"`
-  - `"123"` → `"One  Two  Three"`
-- Designed for better intelligibility.
-
-
----
-
-## 5. Sending audio to radio
-You can map the WAV file to a message button in N1MM or use an external audio interface.  
-Like this in the message editor:  
-F2 Exch,\report_nr.wav  
-And with callsign_nr_tts.py and callsign_slownr_tts.py you have these two additional wav files:  
-F5 His Call,\callsign.wav  
-F6 NR,\nr.wav  
-
-
-Here’s a copy-paste **cookbook** you can drop into your repo’s README. It’s the exact flow we refined together, kept simple and robust.
-
----
+N1MM [experimental software](https://n1mmwp.hamdocs.com/mmfiles/categories/programexperimental/) supports now piper TTS natively. 
 
 # Piper “your personal contest voice” – end-to-end cookbook
 
@@ -334,8 +246,6 @@ print(f"Wrote {out} with {n} lines")
 PY
 ```
 
----
-
 ### Credits / Notes
 
 * Base checkpoint: **`en/en_US/ryan/medium/epoch=4641-step=3104302.ckpt`** (great English co-articulation for small sets).
@@ -343,4 +253,95 @@ PY
 * Always persist `/cache` to your mounted volume before training so logs & checkpoints survive restarts.
 
 
+
+---
+# Using Piper without the native N1MM support
+
+If you for some reason want to use piper with N1MM logging software without the native integration, here are the steps for doing so. This project takes **N1MM Logger+ UDP LookupInfo packets**, extracts the `call` field, converts it into **phonetics**, and uses the **Piper TTS engine** to generate a WAV file for SSB contest messages.  
+
+## Features
+- Works alongside other N1MM UDP tools (custom port)
+- Dynamic TTS — no need to pre-record callsigns
+- Uses [Piper](https://github.com/rhasspy/piper) for fast, offline, natural-sounding voices
+
+---
+
+## 1. Installation
+
+### Prerequisites
+- **Windows 10/11**
+- **Python 3.10+**
+- [Piper TTS binary](https://github.com/rhasspy/piper/releases) (Windows .zip)
+
+### Python script
+```bash
+git clone https://github.com/oh2xx/n1mm-callsign-tts.git
+cd n1mm-callsign-tts
+pip install -r requirements.txt
+```
+
+---
+
+## 2. Piper Setup
+1. Download Piper from: [Piper Releases](https://github.com/rhasspy/piper/releases)
+2. Extract somewhere like `C:\piper\`
+3. Download a voice model, e.g.:
+   - [en_US-amy-medium](https://github.com/rhasspy/piper/releases/tag/v0.0.2)
+4. Place model file (`.onnx`) into Piper folder
+
+---
+
+## 3. N1MM UDP Configuration
+- In N1MM, go to **Config → Configure Ports, Mode Control, Winkey, etc.**
+- Select **Broadcast Data** tab
+- Enable **LookupInfo** broadcast
+- Set **IP** to `127.0.0.1`
+- Set **Port** to `12061`
+- Click **OK**
+<img width="723" height="588" alt="Näyttökuva 2025-08-09 213234" src="https://github.com/user-attachments/assets/04e51615-c025-4a04-8972-c4639a55506b" />
+
+---
+
+## 4. Running the script
+```bash
+python callsign_tts.py
+```
+When N1MM receives a callsign, a `callsign.wav` will be generated in the current folder.
+
+
+## New versions
+
+### `callsign_nr_tts.py`
+- Listens for N1MM LookupInfo UDP packets.
+- Generates `callsign.wav` with the calling station in phonetics.
+- Extracts `<sntnr>` (sent number) from the packet.
+- Creates:
+  - `report_nr.wav` → `"you are five nine ###"` (with ### formatted with leading zeros)
+  - `nr.wav` → just the ### number (leading zeros kept)
+- Leading zero rules:
+  - `<10` → `"00#"` (e.g., `5` → `"005"`)
+  - `<100` → `"0##"` (e.g., `10` → `"010"`)
+  - Otherwise → `"###"`
+
+### `callsign_slownr_tts.py`
+- Same features as `callsign_nr_tts.py`
+- Sent number is spoken **digit-by-digit** with extra pauses for clarity:
+  - `"005"` → `"Zero  Zero  Five"`
+  - `"010"` → `"Zero  One  Zero"`
+  - `"123"` → `"One  Two  Three"`
+- Designed for better intelligibility.
+
+
+---
+
+## 5. Sending audio to radio
+You can map the WAV file to a message button in N1MM or use an external audio interface.  
+Like this in the message editor:  
+F2 Exch,\report_nr.wav  
+And with callsign_nr_tts.py and callsign_slownr_tts.py you have these two additional wav files:  
+F5 His Call,\callsign.wav  
+F6 NR,\nr.wav  
+
+
+---
 
