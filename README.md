@@ -79,7 +79,7 @@ Before uploading, follow these cleanup steps:
   * Mount the network volume at `/dataset`.  
  
 Here is a short video demonstrating the process of launching a network storage with a temporary pod (for transferring files), terminating the pod, and then deploying a new pod with the same storage for training:  
-👉 [Deploying RunPod for Piper voice model training](https://youtu.be/ubn9W1ViimA)
+👉 [Deploying RunPod for Piper voice model training](https://www.youtube.com/watch?v=IowMcf1rIJ0)
 
 
 I found it easiest to use `runpodctl` to copy the local `dataset/` to the runpod volume:
