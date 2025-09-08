@@ -1,6 +1,6 @@
 # N1MM with Piper TTS for AI generated messages
 
-N1MM [experimental software](https://n1mmwp.hamdocs.com/mmfiles/categories/programexperimental/) supports now piper TTS natively. 
+N1MM [latest version](https://n1mmwp.hamdocs.com/) supports now piper TTS natively. 
 
 ## Piper “your personal contest voice” – end-to-end cookbook
 
