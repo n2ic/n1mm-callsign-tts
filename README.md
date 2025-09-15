@@ -9,9 +9,16 @@ If you want the Piper ONNX model to have your own voice this walks you from **re
 You will need some knowledge of Linux concepts and use of the Linux command line. There are many sources on the internet to learn this. In addtion the use of AI, such as Chatgpt, can be very helpful in answering questions.
 
 ---
-Start by downloading all of the files from this github to your local computer. You can use either Windows or Linux.
+For recording your speech samples, you can use either Windows or Linux.
 Most Linux distributions have the tools needed, already installed. If you are using Windows, you will need to set up your computer to work with Python files. 
 
+For Windows:
+Download and install python for windows https://www.python.org/ . When you run the installer at the end watch for the option to add python to the path or enviroment. 
+
+For both Linux and Windows, create a folder (directory) to work in, such as C:\Ham\PiperModel.
+
+Download the *csv and *py files from Kari's GitHub location:
+https://github.com/oh2xx/n1mm-callsign-tts/blob/main/README.md#piper-your-personal-contest-voice--end-to-end-cookbook
 
 ## 1) Record + prepare locally
 
