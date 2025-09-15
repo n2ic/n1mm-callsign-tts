@@ -4,9 +4,14 @@ N1MM [latest version](https://n1mmwp.hamdocs.com/) supports now piper TTS native
 
 ## Piper “your personal contest voice” – end-to-end cookbook
 
-If you want the Piper ONNX model to have your own voice this walks you from **recordings → trained Piper voice** using RunPod and the `ifansnek/piper-train-docker:latest` image.
+If you want the Piper ONNX model to have your own voice this walks you from **recordings → trained Piper voice** 
+
+You will need some knowledge of Linux concepts and use of the Linux command line. There are many sources on the internet to learn this. In addtion the use of AI, such as Chatgpt, can be very helpful in answering questions.
 
 ---
+Start by downloading all of the files from this github to your local computer. You can use either Windows or Linux.
+Most Linux distributions have the tools needed, already installed. If you are using Windows, you will need to set up your computer to work with Python files. 
+
 
 ## 1) Record + prepare locally
 
