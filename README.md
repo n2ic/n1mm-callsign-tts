@@ -120,21 +120,27 @@ Select Manage->Storage, then New Network Volume
   * GPU: **NVIDIA Latest Gen L4** (any CUDA GPU is fine)\
     Select "Edit Template"  
   * Image: **RunPod PyTorch 2.8.0**
-  * Volume Mount Path: `/dataset`.  
+  * Volume Mount Path: `/dataset`.
+
+Scroll down to the bottom, and select "Deploy On-Demand". This deploys (i.e. starts) your Pod. You will be charged for use of the Pod beginning now.\
+Turn on "Enable Web Terminal", then select "Open Web Terminal". This will open a Linux-like Bash shell.  
+When you are done, go back to the "My Pod" tab and select "Terminate". If you do not select Terminate, you will continue to be charged for Pod usage.
  
 Here is a short video demonstrating the process of launching a network storage with a temporary pod (for transferring files), terminating the pod, and then deploying a new pod with the same storage for training:  
 👉 [Deploying RunPod for Piper voice model training](https://www.youtube.com/watch?v=IowMcf1rIJ0)
 
 
-I found it easiest to use `runpodctl` to copy the local `dataset/` to the runpod volume:
+From your local computer, use `runpodctl` to copy the local `dataset/` to the runpod volume:
 
 > ```bash
 > runpodctl send "c:\piper\dataset\wavs"
 > runpodctl send "c:\piper\dataset\metadata.csv"
-> ```
-got to runpod's web terminal in /dataset direcrtory and type
+>
+>  ```
+
+Go back to your RunPod Linux bash tab:
 > ```bash
-> runpodctl receive xyz(=whatever the runpodctl asked you to type)
+> runpodctl receive xyz(=whatever the local runpodctl asked you to type)
 > ```
 
 
