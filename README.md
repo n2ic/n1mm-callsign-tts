@@ -79,9 +79,11 @@ A "Docker Image" is a complete package consisting of everthing needed to run you
 "RunPod.io" is a web site that allows you to reserve a Pod, store your files that are needed by the Docker image, set up your Pod, monitor the execution of your application, etc.
 
 Using RunPod.io does incur costs to you, the user. You pay for storage of your files, and for time that the Pod is deployed (i.e. the Pod is running). Here's the costs I incurred to create my voice model:\
-$2.70 per month for storing files, including the wav files.\
-$0.39 per hour for Pod deployment.\
-The total for creating my voice model was $1.55 US, which included many missteps in getting the Pod configured correctly.
+US $2.70 per month for storing files, including the wav files.\
+US $0.39 per hour for Pod deployment.\
+The total for creating my voice model was US $1.55, which included many missteps in getting the Pod configured correctly.
+
+Create an account on RunPod.io and fund it with the minimum amount of US $10.
 
 Before uploading, follow these cleanup steps:
 
@@ -95,6 +97,18 @@ Before uploading, follow these cleanup steps:
 ---
 
 ## 1) Upload to RunPod.io (staging pod)
+
+Install runpodctl on your local computer.
+
+On Linux:
+```
+sudo snap install go
+sudo snap install go --classic
+go install github.com/runpod/runpodctl@latest
+```
+
+On Windows:\
+Use chatgpt.com, entering the query: "installing runpodctl on windows". Chatgpt will give you detailed instructions.
 
 * Create a **Network Volume** (e.g., 40 GB).
 * Launch a temporary pod just to transfer files:
