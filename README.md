@@ -79,7 +79,7 @@ A "Docker Image" is a complete package consisting of everthing needed to run you
 "RunPod.io" is a web site that allows you to reserve a Pod, store your files that are needed by the Docker image, set up your Pod, monitor the execution of your application, etc.
 
 Using RunPod.io does incur costs to you, the user. You pay for storage of your files, and for time that the Pod is deployed (i.e. the Pod is running). Here's the costs I incurred to create my voice model:\
-US $2.70 per month for storing files, including the wav files.\
+US $2.80 per month for storing files, including the wav files.\
 US $0.39 per hour for Pod deployment.\
 The total for creating my voice model was US $1.55, which included many missteps in getting the Pod configured correctly.
 
@@ -117,8 +117,8 @@ Select Manage->Storage, then New Network Volume
 * Create a **Network Volume** of 40 GB.
 * Launch a temporary pod just to transfer files by selecting "Deploy Pod With Volume".
  
-  * GPU: **NVIDIA Latest Gen L4** (any CUDA GPU is fine)
-    Select "Edit Template"
+  * GPU: **NVIDIA Latest Gen L4** (any CUDA GPU is fine)\
+    Select "Edit Template"  
   * Image: **RunPod PyTorch 2.8.0**
   * Volume Mount Path: `/dataset`.  
  
