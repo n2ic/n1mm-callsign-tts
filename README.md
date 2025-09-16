@@ -19,6 +19,21 @@ For both Linux and Windows, create a folder (directory) to work in, such as C:\H
 
 Download the *csv and *py files from Kari's GitHub location:
 https://github.com/oh2xx/n1mm-callsign-tts/blob/main/README.md#piper-your-personal-contest-voice--end-to-end-cookbook
+and copy them to your working folder (i.e. C:\Ham\PiperModel ).
+
+More special instructions for Windows:
+Open a PowerShell window (a cmd window should also work). It doesn't need to be run as as Administrator.
+cd to the directory with the *.py files
+Enter these commands:
+
+python -m venv myenv
+myenv\Scripts\activate
+python -m pip install sounddevice
+pip install soundfile
+
+Run the mic_test with:
+python mic_test.py
+If it works, you are ready to record.
 
 ## 1) Record + prepare locally
 
