@@ -98,7 +98,7 @@ Before uploading, follow these cleanup steps:
 
 ## 1) Upload to RunPod.io (staging pod)
 
-Install runpodctl on your local computer.
+Install runpodctl on your local computer. Runpodctl is needed to transfer files between your local computer and the RunPod servers.
 
 On Linux:
 ```
@@ -110,12 +110,17 @@ go install github.com/runpod/runpodctl@latest
 On Windows:\
 Use chatgpt.com, entering the query: "installing runpodctl on windows". Chatgpt will give you detailed instructions.
 
-* Create a **Network Volume** (e.g., 40 GB).
-* Launch a temporary pod just to transfer files:
+Log into your RunPod.io account. 
 
+Select Manage->Storage, then New Network Volume
+
+* Create a **Network Volume** of 40 GB.
+* Launch a temporary pod just to transfer files by selecting "Deploy Pod With Volume".
+ 
+  * GPU: **NVIDIA Latest Gen L4** (any CUDA GPU is fine)
+    Select "Edit Template"
   * Image: **RunPod PyTorch 2.8.0**
-  * GPU: **NVIDIA L4** (any CUDA GPU is fine)
-  * Mount the network volume at `/dataset`.  
+  * Volume Mount Path: `/dataset`.  
  
 Here is a short video demonstrating the process of launching a network storage with a temporary pod (for transferring files), terminating the pod, and then deploying a new pod with the same storage for training:  
 👉 [Deploying RunPod for Piper voice model training](https://www.youtube.com/watch?v=IowMcf1rIJ0)
