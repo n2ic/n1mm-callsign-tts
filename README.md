@@ -9,27 +9,28 @@ If you want the Piper ONNX model to have your own voice this walks you from **re
 You will need some knowledge of Linux concepts and use of the Linux command line. There are many sources on the internet to learn this. In addtion the use of AI, such as Chatgpt, can be very helpful in answering questions.
 
 ---
-For recording your speech samples, you can use either Windows or Linux.
+For recording your speech samples, you can use either Windows or Linux.\
 Most Linux distributions have the tools needed, already installed. If you are using Windows, you will need to set up your computer to work with Python files. 
 
-For Windows:
-Download and install python for windows https://www.python.org/ . When you run the installer at the end watch for the option to add python to the path or enviroment. 
+For Windows:\
+Download and install python for windows https://www.python.org/ . When you run the installer, watch for the option to add python to the path or enviroment. 
 
 For both Linux and Windows, create a folder (directory) to work in, such as C:\Ham\PiperModel.
 
-Download the *csv and *py files from Kari's GitHub location:
+Download the *csv and *py files from Kari's GitHub location:\
 https://github.com/oh2xx/n1mm-callsign-tts/blob/main/README.md#piper-your-personal-contest-voice--end-to-end-cookbook
 and copy them to your working folder (i.e. C:\Ham\PiperModel ).
 
 More special instructions for Windows:
-Open a PowerShell window (a cmd window should also work). It doesn't need to be run as as Administrator.
-cd to the directory with the *.py files
-Enter these commands:
 
+Open a PowerShell window (a cmd window should also work). It doesn't need to be run as as Administrator.\
+cd to the directory with the *.py files and enter these commands:
+```
 python -m venv myenv
 myenv\Scripts\activate
 python -m pip install sounddevice
 pip install soundfile
+```
 
 Run the mic_test with:
 python mic_test.py
@@ -64,39 +65,36 @@ dataset/
   metadata.csv          # lines: wavs/<file>.wav|transcript
 ```
 
-### For best on-air clarity, you need to   add a tiny head-silence to each clip to eliminate the little “khi/thi” at the start of synth.
-
-### (Recommended) Add 120–300 ms of head silence + 15 ms fade-in
-
-Save `augment_head_silence.py` next to `dataset/` and run it once:
-
-After this you have: dataset/wavs_aug/ + dataset/metadata_aug.csv
-
 ---
 
-## 🛠️ 2) Prepare and Upload to RunPod (Staging Pod)
+## 🛠️ 2) Prepare for use of RunPod
+
+In the next steps, you will be using a powerful remote server to create a voice model file from the wav files you previously recorded.
+
+A few definitions:\
+A "Pod" is where programs execute on the remote server. Think of the Pod as a powerful computer dedicated to running your application. It may actually be part of a server farm, with many simultaneous users, that you don't know or care about.
+
+A "Docker Image" is a complete package consisting of everthing needed to run your application on your Pod. This may include the operating system, and application software, and needed files. A Docker Image can be very large in size.
+
+"RunPod.io" is a web site that allows you to reserve a Pod, store your files that are needed by the Docker image, set up your Pod, monitor the execution of your application, etc.
+
+Using RunPod.io does incur costs to you, the user. You pay for storage of your files, and for time that the Pod is deployed (i.e. the Pod is running). Here's the costs I incurred to create my voice model:\
+$2.70 per month for storing files, including the wav files.\
+$0.39 per hour for Pod deployment.\
+The total for creating my voice model was $1.55 US, which included many missteps in getting the Pod configured correctly.
 
 Before uploading, follow these cleanup steps:
 
 1. **📦 Backup Your Audio Files**
-   - Open File Explorer and navigate to `dataset\wavs_aug\`.
+   - Open File Explorer and navigate to `dataset\wavs\`.
    - Select all `.wav` files, right-click, and choose **Send to > Compressed (zipped) folder**.
    - Name the archive something like `wavs_backup.zip` and store it safely.
 
    Alternatively, you can copy the files to a separate backup folder manually.
 
-2. **🧹 Clean Up File and Directory Names**
-   - Rename the folder `wavs_aug` to `wavs`:
-     - Right-click the folder > **Rename** > type `wavs`.
-   - Rename the file `metadata_aug.csv` to `metadata.csv`:
-     - Right-click the file > **Rename** > type `metadata.csv`.
-   - To remove `_aug` from all `.wav` filenames inside `dataset\wavs`, you can use a PowerShell command:
-     ```powershell
-     Get-ChildI
-
 ---
 
-## 3) Upload to RunPod.io (staging pod)
+## 1) Upload to RunPod.io (staging pod)
 
 * Create a **Network Volume** (e.g., 40 GB).
 * Launch a temporary pod just to transfer files:
