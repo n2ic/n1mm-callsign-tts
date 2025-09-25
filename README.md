@@ -98,7 +98,7 @@ Before uploading, follow these cleanup steps:
 
 ## 1) Upload to RunPod.io (staging pod)
 
-Install runpodctl on your local computer. Runpodctl is needed to transfer files between your local computer and the RunPod servers.
+The purpose of this staging pod is to upload your wav files to your network volume on RunPod.io. Install runpodctl on your local computer. Runpodctl is needed to transfer files between your local computer and the RunPod servers.
 
 On Linux:
 ```
@@ -163,7 +163,7 @@ Terminate this staging pod.
 
 ## 4) Launch the **training** pod
 
-From your **Network Volume** page → “Deploy Pod with Volume”.
+This is where your voice model is created and "trained". From your RunPod.io **Network Volume** page → “Deploy Pod with Volume”.
 
 * **Docker image:** `ifansnek/piper-train-docker:latest`
 * **Volume Mount Path:** `/dataset`
