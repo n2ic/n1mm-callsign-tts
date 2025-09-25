@@ -167,7 +167,7 @@ This is where your voice model is created and "trained". From your RunPod.io **N
 
 * **Docker image:** `ifansnek/piper-train-docker:latest`
 * **Volume Mount Path:** `/dataset`
-* **Expose HTTP Port:** `6006` (TensorBoard)
+* **Expose HTTP Ports:** `6006` (TensorBoard)
 * **Environment variables:**
 
   ```
@@ -179,6 +179,9 @@ This is where your voice model is created and "trained". From your RunPod.io **N
   (If VRAM is tight, use `--batch-size 16`.)
 
 > **Do not set a Start Command.** The image autostarts.
+>
+  Select "Set Overrides"\
+  Select "Deploy On-Demand"
 
 ### Make outputs persistent (do this once per new pod)
 
