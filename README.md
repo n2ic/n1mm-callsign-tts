@@ -177,7 +177,6 @@ This is where your voice model is created and "trained". From your RunPod.io **N
   ```
 
   (If VRAM is tight, use `--batch-size 16`.)
-
 > **Do not set a Start Command.** The image autostarts.
 >
   Select "Set Overrides"\
@@ -198,6 +197,7 @@ rm -rf /cache && ln -sfn /dataset/cache /cache
 mkdir -p /cache/cache
 
 # restart the pod so training restarts with the persistent /cache
+./start.sh
 ```
 
 > After the restart, the container will auto-preprocess (CPU heavy), then train (GPU).
@@ -207,10 +207,10 @@ mkdir -p /cache/cache
 
 ## 5) Monitor training
 
-Open the pod’s **6006** link → **Scalars**.
+Open Tensorboard at Port 6006->HTTP Services\
+Select the **Scalars** tab.
 
-* If `TRAIN_ARGS` took effect, you’ll see **`val/*`** metrics. Filter tags with `^val/` and watch `val/loss_gen_all` trend down/flatten.
-* If there are no `val/*` tags, filter `loss_` and watch `loss_gen_all`. When it flattens, export a checkpoint and listen.
+* Watch `loss_gen_all`. When it flattens, export a checkpoint and listen.
 
 Quick terminal helpers:
 
@@ -281,22 +281,6 @@ Place your **`voice.onnx`** next to the **Ryan medium JSON** (download from Hugg
 
 ---
 
-## (Appendix) Convert to LJSpeech metadata if needed
-
-Some tools prefer `id|text` (LJSpeech). This creates `metadata_lj.csv` from your existing `metadata.csv`:
-
-```bash
-python - <<'PY'
-import os
-inp="dataset/metadata.csv"; out="dataset/metadata_lj.csv"; n=0
-with open(inp,"r",encoding="utf-8") as f, open(out,"w",encoding="utf-8") as g:
-  for line in f:
-    if "|" not in line: continue
-    left,text = line.strip().split("|",1)
-    base = os.path.splitext(os.path.basename(left))[0]
-    g.write(f"{base}|{text.strip()}\n"); n+=1
-print(f"Wrote {out} with {n} lines")
-PY
 ```
 
 ### Credits / Notes
@@ -304,96 +288,6 @@ PY
 * Base checkpoint: **`en/en_US/ryan/medium/epoch=4641-step=3104302.ckpt`** (great English co-articulation for small sets).
 * The head-silence augmentation is what eliminates the tiny onset artifact on contest phrases without adding any runtime delay.
 * Always persist `/cache` to your mounted volume before training so logs & checkpoints survive restarts.
-
-
-
----
-# Using Piper without the native N1MM support
-
-If you for some reason want to use piper with N1MM logging software without the native integration, here are the steps for doing so. This project takes **N1MM Logger+ UDP LookupInfo packets**, extracts the `call` field, converts it into **phonetics**, and uses the **Piper TTS engine** to generate a WAV file for SSB contest messages.  
-
-## Features
-- Works alongside other N1MM UDP tools (custom port)
-- Dynamic TTS — no need to pre-record callsigns
-- Uses [Piper](https://github.com/rhasspy/piper) for fast, offline, natural-sounding voices
-
----
-
-## 1. Installation
-
-### Prerequisites
-- **Windows 10/11**
-- **Python 3.10+**
-- [Piper TTS binary](https://github.com/rhasspy/piper/releases) (Windows .zip)
-
-### Python script
-```bash
-git clone https://github.com/oh2xx/n1mm-callsign-tts.git
-cd n1mm-callsign-tts
-pip install -r requirements.txt
-```
-
----
-
-## 2. Piper Setup
-1. Download Piper from: [Piper Releases](https://github.com/rhasspy/piper/releases)
-2. Extract somewhere like `C:\piper\`
-3. Download a voice model, e.g.:
-   - [en_US-amy-medium](https://github.com/rhasspy/piper/releases/tag/v0.0.2)
-4. Place model file (`.onnx`) into Piper folder
-
----
-
-## 3. N1MM UDP Configuration
-- In N1MM, go to **Config → Configure Ports, Mode Control, Winkey, etc.**
-- Select **Broadcast Data** tab
-- Enable **LookupInfo** broadcast
-- Set **IP** to `127.0.0.1`
-- Set **Port** to `12061`
-- Click **OK**
-<img width="723" height="588" alt="Näyttökuva 2025-08-09 213234" src="https://github.com/user-attachments/assets/04e51615-c025-4a04-8972-c4639a55506b" />
-
----
-
-## 4. Running the script
-```bash
-python callsign_tts.py
-```
-When N1MM receives a callsign, a `callsign.wav` will be generated in the current folder.
-
-
-## New versions
-
-### `callsign_nr_tts.py`
-- Listens for N1MM LookupInfo UDP packets.
-- Generates `callsign.wav` with the calling station in phonetics.
-- Extracts `<sntnr>` (sent number) from the packet.
-- Creates:
-  - `report_nr.wav` → `"you are five nine ###"` (with ### formatted with leading zeros)
-  - `nr.wav` → just the ### number (leading zeros kept)
-- Leading zero rules:
-  - `<10` → `"00#"` (e.g., `5` → `"005"`)
-  - `<100` → `"0##"` (e.g., `10` → `"010"`)
-  - Otherwise → `"###"`
-
-### `callsign_slownr_tts.py`
-- Same features as `callsign_nr_tts.py`
-- Sent number is spoken **digit-by-digit** with extra pauses for clarity:
-  - `"005"` → `"Zero  Zero  Five"`
-  - `"010"` → `"Zero  One  Zero"`
-  - `"123"` → `"One  Two  Three"`
-- Designed for better intelligibility.
-
-
----
-
-## 5. Sending audio to radio
-You can map the WAV file to a message button in N1MM or use an external audio interface.  
-Like this in the message editor:  
-F2 Exch,\report_nr.wav  
-And with callsign_nr_tts.py and callsign_slownr_tts.py you have these two additional wav files:  
-F5 His Call,\callsign.wav  
-F6 NR,\nr.wav  
 
 
 ---
